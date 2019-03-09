@@ -1,0 +1,25 @@
+{
+	"workerThread": 2,
+	"modulePath": "../lib/lib?.so",
+	"driverPath": "../lib/lib?.so",
+	"daemon": false,
+	"profile": true,
+	
+	"lua_path": "../?.lua;../lualib/?.lua;../luaservice/?.lua;../example/console/?.lua;../example/simple/base/?.lua;../example/simple/udp/?.lua;../example/simple/tcp/?.lua;../example/simple/http/?.lua;../example/simple/db/?.lua;../example/simple/sig/?.lua;../example/simple/exe/?.lua",
+	"lua_cpath": "../lib/lib?.so",
+	"lua_loader": "../lualib/loader.lua",
+
+	"start": "Launcher",
+	"args": {
+		"launch": [{
+			"service": "Logger",
+			"args": {"level":"INFO"}
+		},{
+			"service": "Snlua",
+			"args": ["console_main", "0.0.0.0", 9000]
+		},{
+			"service": "Snlua",
+			"args": ["testhttpd3", "0.0.0.0", 3606]
+		}]
+	}	
+}

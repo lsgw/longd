@@ -1,0 +1,1 @@
+add_executable(sum sum5.c)

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>lua源码测试</title>
+	<link rel="stylesheet" href="codemirror-5.42.0/lib/codemirror.css">
+	<script src="codemirror-5.42.0/lib/codemirror.js"></script>
+
+
+
+	<link rel="stylesheet" href="codemirror-5.42.0/theme/monokai.css">
+	<link rel="stylesheet" href="codemirror-5.42.0/theme/duotone-light.css">
+
+	<script src="codemirror-5.42.0/addon/edit/closetag.js"></script>
+	<script src="codemirror-5.42.0/mode/lua/lua.js"></script>
+	<script src="codemirror-5.42.0/addon/edit/matchbrackets.js"></script>
+
+	<script src="jquery-3.3.1/jquery.js"></script>
+
+	<style type="text/css">
+
+		.CodeMirror {
+			font-size: 16px;
+		}
+		#run {
+			background: #0FF;
+			border: 0;
+			border-radius: 3px;
+			padding: 8px;
+			width: 12%;
+			color: #333;
+			outline: 0;
+		}
+		#run:hover {
+			background: red;
+		}
+		#run:active {
+			background: rgba(255, 180, 180, 1);
+		}
+	</style>
+</head>
+<body>
+	<textarea id="code" name="code"></textarea>
+	<!-- <hr /> -->
+	<div>
+		<button id="run">运行</button>
+	</div>
+	<!-- <hr /> -->
+	<textarea id="out" name="out"></textarea>
+
+	<script>
+		var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+			lineNumbers: true,     // 显示行号
+			indentUnit: 4,         // 缩进单位为4
+			styleActiveLine: true, // 当前行背景高亮
+			matchBrackets: true,   // 括号匹配
+			// mode: 'lua',           // HMTL混合模式
+			// lineWrapping: true,    // 自动换行
+			theme: "monokai"
+		});
+		var h = $(window).height();
+		editor.setSize('auto',  (h * 4 / 7) + 'px');
+
+		var out = CodeMirror.fromTextArea(document.getElementById("out"), {
+			// styleActiveLine: true,
+			// matchBrackets: true,
+			// theme: "duotone-light"
+		});
+		out.setSize('auto', (h * 3 / 7) + 'px');
+
+		$( "#run" ).click(function() {
+			$.ajax({
+				method: "POST",
+				url: "run.lua.script",
+				data: editor.getValue()
+			})
+			.done(function( msg ) {
+				out.setValue(msg)
+			});
+		});
+	</script>
+
+</body>
+</html>
